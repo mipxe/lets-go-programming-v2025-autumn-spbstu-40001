@@ -21,7 +21,7 @@ func main() {
 	}
 	_, err = fmt.Scan(&operation)
 	if err != nil {
-		fmt.Println("Invalid input operation")
+		fmt.Println("Invalid operation")
 		return
 	}
 
