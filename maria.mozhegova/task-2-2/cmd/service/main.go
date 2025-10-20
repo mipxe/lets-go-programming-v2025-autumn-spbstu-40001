@@ -32,6 +32,7 @@ func (h *IntHeap) Push(x any) {
 	if !ok {
 		panic("value is not an int")
 	}
+
 	*h = append(*h, value)
 }
 
