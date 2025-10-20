@@ -1,8 +1,11 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
+
+var errInvalidCondition = errors.New("invalid condition")
 
 const (
 	minTemp = 15
@@ -14,23 +17,23 @@ type Temperature struct {
 	max int
 }
 
-func (temp *Temperature) printTempChange(cond string, currTemp int) {
+func (temp *Temperature) changeTemp(cond string, currTemp int) error {
 	switch cond {
 	case "<=":
 		temp.max = min(temp.max, currTemp)
 	case ">=":
 		temp.min = max(temp.min, currTemp)
 	default:
-		fmt.Println("Invalid condition")
-
-		return
+		return errInvalidCondition
 	}
+	return nil
+}
 
+func (temp *Temperature) getOptimalTemp() int {
 	if temp.min > temp.max {
-		fmt.Println(-1)
-	} else {
-		fmt.Println(temp.min)
+		return -1
 	}
+	return temp.min
 }
 
 func main() {
@@ -38,7 +41,7 @@ func main() {
 
 	_, err := fmt.Scan(&departNum)
 	if err != nil {
-		fmt.Println("Invalid input:", err)
+		fmt.Println("Failed to read count of departments:", err)
 
 		return
 	}
@@ -51,7 +54,7 @@ func main() {
 
 		_, err := fmt.Scan(&employNum)
 		if err != nil {
-			fmt.Println("Invalid input:", err)
+			fmt.Println("Failed to read count of employees:", err)
 
 			return
 		}
@@ -64,19 +67,26 @@ func main() {
 
 			_, err := fmt.Scan(&condition)
 			if err != nil {
-				fmt.Println("Invalid input:", err)
+				fmt.Println("Failed to read condition:", err)
 
 				return
 			}
 
 			_, err = fmt.Scan(&currentTemp)
 			if err != nil {
-				fmt.Println("Invalid input:", err)
+				fmt.Println("Failed to read temperature:", err)
 
 				return
 			}
 
-			temperature.printTempChange(condition, currentTemp)
+			err = temperature.changeTemp(condition, currentTemp)
+			if err != nil {
+				fmt.Println("Failed to change temperature:", err)
+
+				return
+			}
+
+			fmt.Println(temperature.getOptimalTemp())
 		}
 	}
 }
