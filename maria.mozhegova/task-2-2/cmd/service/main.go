@@ -12,20 +12,27 @@ func (h *IntHeap) Len() int {
 }
 
 func (h *IntHeap) Less(i, j int) bool {
+	if i < 0 || i >= h.Len() || j < 0 || j >= h.Len() {
+		panic("index out of range in intheap")
+	}
+
 	return (*h)[i] > (*h)[j]
 }
 
 func (h *IntHeap) Swap(i, j int) {
+	if i < 0 || i >= h.Len() || j < 0 || j >= h.Len() {
+		panic("index out of range in inthea")
+	}
+
 	(*h)[i], (*h)[j] = (*h)[j], (*h)[i]
 }
 
 func (h *IntHeap) Push(x any) {
 	value, ok := x.(int)
-	if ok {
-		*h = append(*h, value)
-	} else {
+	if !ok {
 		panic("value is not an int")
 	}
+	*h = append(*h, value)
 }
 
 func (h *IntHeap) Pop() any {
@@ -52,7 +59,7 @@ func main() {
 
 	_, err := fmt.Scan(&dishNum)
 	if err != nil {
-		fmt.Println("Invalid input:", err)
+		fmt.Println("Failed to read count of dishes:", err)
 
 		return
 	}
@@ -65,7 +72,7 @@ func main() {
 
 		_, err := fmt.Scan(&rating)
 		if err != nil {
-			fmt.Println("Invalid input:", err)
+			fmt.Println("Failed to read dish rating:", err)
 
 			return
 		}
@@ -77,7 +84,7 @@ func main() {
 
 	_, err = fmt.Scan(&dishK)
 	if err != nil {
-		fmt.Println("Invalid input:", err)
+		fmt.Println("Failed to read K:", err)
 
 		return
 	}
@@ -92,5 +99,12 @@ func main() {
 		heap.Pop(ratings)
 	}
 
-	fmt.Println(heap.Pop(ratings))
+	result := heap.Pop(ratings)
+	if result == nil {
+		fmt.Println("There is no such dish")
+
+		return
+	}
+
+	fmt.Println(result)
 }
