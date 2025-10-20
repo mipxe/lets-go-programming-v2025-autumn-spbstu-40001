@@ -26,6 +26,7 @@ func (temp *Temperature) changeTemp(cond string, currTemp int) error {
 	default:
 		return errInvalidCondition
 	}
+
 	return nil
 }
 
@@ -33,6 +34,7 @@ func (temp *Temperature) getOptimalTemp() int {
 	if temp.min > temp.max {
 		return -1
 	}
+
 	return temp.min
 }
 
