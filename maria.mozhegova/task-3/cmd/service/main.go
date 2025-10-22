@@ -24,4 +24,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	valCurs.SortByValueDesc()
+	err = currency.WriteToJSON(valCurs, config.OutputFile)
+	if err != nil {
+		panic(err)
+	}
 }
