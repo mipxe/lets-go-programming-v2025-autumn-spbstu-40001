@@ -4,6 +4,7 @@ import (
 	"flag"
 
 	"github.com/mipxe/task-3/internal/config"
+	"github.com/mipxe/task-3/internal/currency"
 )
 
 func main() {
@@ -19,4 +20,8 @@ func main() {
 		panic(err)
 	}
 
+	valCurs, err := currency.ReadValCurs(config.InputFile)
+	if err != nil {
+		panic(err)
+	}
 }
