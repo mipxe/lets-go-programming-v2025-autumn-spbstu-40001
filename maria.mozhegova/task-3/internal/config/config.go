@@ -19,6 +19,7 @@ func ReadConfig(path string) (*Config, error) {
 	}
 
 	var config Config
+
 	err = yaml.Unmarshal(data, &config)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse YAML: %w", err)

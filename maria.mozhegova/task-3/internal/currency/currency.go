@@ -22,9 +22,9 @@ const (
 
 type ValCurs struct {
 	Valutes []struct {
-		NumCode  int           `json:"num_code"  xml:"NumCode"`
-		CharCode string        `json:"char_code"  xml:"CharCode"`
-		Value    CustomFloat64 `json:"value"  xml:"Value"`
+		NumCode  int           `json:"num_code" xml:"NumCode"`
+		CharCode string        `json:"char_code" xml:"CharCode"`
+		Value    CustomFloat64 `json:"value" xml:"Value"`
 	} `xml:"Valute"`
 }
 
@@ -32,6 +32,7 @@ type CustomFloat64 float64
 
 func (c *CustomFloat64) UnmarshalXML(decoder *xml.Decoder, start xml.StartElement) error {
 	var valueStr string
+
 	err := decoder.DecodeElement(&valueStr, &start)
 	if err != nil {
 		return fmt.Errorf("failed to parse value: %w", err)
@@ -43,6 +44,7 @@ func (c *CustomFloat64) UnmarshalXML(decoder *xml.Decoder, start xml.StartElemen
 	}
 
 	*c = CustomFloat64(value)
+
 	return nil
 }
 
@@ -58,6 +60,7 @@ func ReadValCurs(path string) (*ValCurs, error) {
 	}
 
 	var valCurs ValCurs
+
 	err = decoder.Decode(&valCurs)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse XML: %w", err)
@@ -78,7 +81,7 @@ func WriteToJSON(valCurs *ValCurs, path string) error {
 		return fmt.Errorf("failed to create a dir: %w", err)
 	}
 
-	data, err := json.MarshalIndent(valCurs, "", " ")
+	data, err := json.MarshalIndent(valCurs.Valutes, "", " ")
 	if err != nil {
 		return fmt.Errorf("failed to write JSON: %w", err)
 	}
