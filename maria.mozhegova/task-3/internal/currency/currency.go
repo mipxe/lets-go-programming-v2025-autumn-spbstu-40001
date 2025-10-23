@@ -22,9 +22,9 @@ const (
 
 type ValCurs struct {
 	Valutes []struct {
-		NumCode  int           `json:"num_code" xml:"NumCode"`
+		NumCode  int           `json:"num_code"  xml:"NumCode"`
 		CharCode string        `json:"char_code" xml:"CharCode"`
-		Value    CustomFloat64 `json:"value" xml:"Value"`
+		Value    CustomFloat64 `json:"value"     xml:"Value"`
 	} `xml:"Valute"`
 }
 
