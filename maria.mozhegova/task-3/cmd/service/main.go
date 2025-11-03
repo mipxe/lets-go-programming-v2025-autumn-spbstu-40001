@@ -9,6 +9,11 @@ import (
 	"github.com/mipxe/task-3/internal/xml"
 )
 
+const (
+	DirPerm  = 0o755
+	FilePerm = 0o644
+)
+
 func main() {
 	configPath := flag.String("config", "config.yaml", "path to yaml file")
 	flag.Parse()
@@ -27,7 +32,7 @@ func main() {
 
 	valCurs.SortByValueDesc()
 
-	err = json.WriteToJSON(valCurs.Valutes, config.OutputFile)
+	err = json.WriteToJSON(valCurs.Valutes, config.OutputFile, DirPerm, FilePerm)
 	if err != nil {
 		panic(err)
 	}

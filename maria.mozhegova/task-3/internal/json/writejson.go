@@ -7,13 +7,8 @@ import (
 	"path/filepath"
 )
 
-const (
-	DirPerm  = 0o755
-	FilePerm = 0o644
-)
-
-func WriteToJSON(data any, path string) error {
-	err := os.MkdirAll(filepath.Dir(path), DirPerm)
+func WriteToJSON(data any, path string, dirPerm os.FileMode, filePerm os.FileMode) error {
+	err := os.MkdirAll(filepath.Dir(path), dirPerm)
 	if err != nil {
 		return fmt.Errorf("failed to create a dir: %w", err)
 	}
@@ -23,7 +18,7 @@ func WriteToJSON(data any, path string) error {
 		return fmt.Errorf("failed to write JSON: %w", err)
 	}
 
-	err = os.WriteFile(path, newdata, FilePerm)
+	err = os.WriteFile(path, newdata, filePerm)
 	if err != nil {
 		return fmt.Errorf("failed to write JSON: %w", err)
 	}
